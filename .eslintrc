@@ -1,0 +1,22 @@
+{
+  "parser":                        "babel-eslint",
+  "extends":                       "eslint:recommended",
+  "env":                           {
+    "node":                        true,
+    "mocha":                       true
+  },
+  "globals":                       {
+    "Promise":                     true,
+    "window":                      true,
+    "navigator":                   true
+  },
+  "rules":                         {
+    "arrow-parens":                0,
+    "generator-star-spacing":      0,
+    "space-before-function-paren": ["error", {
+        "anonymous":               "always",
+        "named":                   "never",
+        "asyncArrow":              "always"
+    }]
+  }
+}
