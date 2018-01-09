@@ -4,7 +4,7 @@
 
 通过使用JS-SDK，网页开发者可借助微信高效地使用拍照、选图、语音、位置等手机系统的能力，同时可以直接使用分享、扫一扫、卡券、支付等手机银行特有的能力，为手机银行用户提供更优质的网页体验。
 
-此文档面向网页开发者介绍微信JS-SDK如何使用及相关注意事项。
+此文档面向网页开发者介绍JS-SDK如何使用及相关注意事项。
 
 [babel]: https://github.com/babel/babel
 [jsnext:main]: https://github.com/rollup/rollup/wiki/jsnext:main
