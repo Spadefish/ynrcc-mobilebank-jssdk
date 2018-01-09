@@ -19,20 +19,26 @@
     "predev": "eslint lib example",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot"
   },
-  "repository": "rollup/ynrcc-mobilebank-jssdk",
+  "repository": "Jiiiiiin/ynrcc-mobilebank-jssdk",
   "keywords": [
-    "es6",
-    "modules",
+    "ynrcc",
+    "jbridge",
+    "android",
+    "ios",
+    "webview",
     "rollup",
-    "bundle",
-    "browser"
+    "es6"
   ],
   "author": "z.jiiiiiin <“jiiiiiin@yeah.net”>",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Jiiiiiin/ynrcc-mobilebank-jssdk/issues"
+  },
   "files": [
     "lib",
     "dist"
   ],
+  "homepage": "https://jiiiiiin.github.io/ynrcc-mobilebank-jssdk/#/",
   "dependencies": {
     "es6-promise": "^4.2.2"
   },
