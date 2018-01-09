@@ -1,27 +1,22 @@
 # 云南农信手机银行JS-SDK说明文档
 
-微信JS-SDK是微信公众平台 面向网页开发者提供的基于微信内的网页开发工具包。
+本JS-SDK是面向云南农信手机银行客户端网页开发者提供的网页开发工具包。
 
-通过使用微信JS-SDK，网页开发者可借助微信高效地使用拍照、选图、语音、位置等手机系统的能力，同时可以直接使用微信分享、扫一扫、卡券、支付等微信特有的能力，为微信用户提供更优质的网页体验。
+通过使用JS-SDK，网页开发者可借助微信高效地使用拍照、选图、语音、位置等手机系统的能力，同时可以直接使用分享、扫一扫、卡券、支付等手机银行特有的能力，为手机银行用户提供更优质的网页体验。
 
-此文档面向网页开发者介绍微信JS-SDK如何使用及相关注意事项。
+此文档面向网页开发者介绍JS-SDK如何使用及相关注意事项。
 
 [babel]: https://github.com/babel/babel
 [jsnext:main]: https://github.com/rollup/rollup/wiki/jsnext:main
 [rollup]: https://github.com/rollup/rollup
 
-## Usage
-
-You can simply use this project as inspiration for how to configure your own,
-or clone it and edit the metadata files when starting your own project (i.e.
-README.md, package.json, and LICENSE).
 
 ### lib/index.js
 
 This is the main source file in your application, and the main file you'll start
 editing to implement the functionality of your package. As shown in this
 example, you can `import` other files from this file similarly to how you would
-`require` packages typically (e.g. `lib/utils.js`).
+`require` packages typically
 
 ### test/index_test.js
 
@@ -103,13 +98,13 @@ such as [Jasmine](http://jasmine.github.io).
 
 ### istanbul
 
-[istanbul](https://github.com/gotwarlost/istanbul) is a code coverage tool that 
-computes statement, line, function and branch coverage with module loader hooks 
-to transparently add coverage when running tests. You can remove this dependency 
+[istanbul](https://github.com/gotwarlost/istanbul) is a code coverage tool that
+computes statement, line, function and branch coverage with module loader hooks
+to transparently add coverage when running tests. You can remove this dependency
 if you won't be writing tests or you don't care about code coverage.
 
-You'll also have to change the `test/mocha.opts` file and remove the custom 
-reporter option `--reporter test/istanbul.reporter.js`. After that you can safely 
+You'll also have to change the `test/mocha.opts` file and remove the custom
+reporter option `--reporter test/istanbul.reporter.js`. After that you can safely
 delete the `test/istanbul.reporter.js` file.
 
 ### rollup
@@ -125,15 +120,10 @@ ES2015 code to ES5. You can remove this if you plan not to use ES2015 code.
 
 ### rollup-plugin-istanbul
 
-This plugin provides seamless integration between Rollup and 
+This plugin provides seamless integration between Rollup and
 [Istanbul](https://github.com/gotwarlost/istanbul) to generate code coverage
-reports of your project. If you don't plan to write tests or simply don't care 
+reports of your project. If you don't plan to write tests or simply don't care
 about code coverage, you can safely remove this along with Istanbul.
 
 Just like with the Istanbul dependency, you should change the `test/mocha.opts`
 file. Read the above instructions for removing Istanbul.
-
-## Contributing
-
-If you think a project built with rollup should be set up differently, open an
-issue to discuss it or create a pull request.
