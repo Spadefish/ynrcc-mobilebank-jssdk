@@ -23,9 +23,6 @@ export default {
   entry: 'lib/index.js',
   plugins: plugins,
   external: external,
-  globals: {
-    'es6-promise': 'ES6Promise'
-  },
   targets: [
     {
       dest: pkg.main,
