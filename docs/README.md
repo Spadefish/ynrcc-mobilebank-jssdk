@@ -6,124 +6,239 @@
 
 此文档面向网页开发者介绍JS-SDK如何使用及相关注意事项。
 
-[babel]: https://github.com/babel/babel
-[jsnext:main]: https://github.com/rollup/rollup/wiki/jsnext:main
-[rollup]: https://github.com/rollup/rollup
 
+## 文档
+
++ [中文文档](https://jiiiiiin.github.io/ynrcc-mobilebank-jssdk/#/)
++ English(working)
+
+
+## Issues
+
+`ynrcc-mobilebank-jssdk` 是为云南农信手机银行面向网页开发者提供的基于客户端内的网页开发工具包，如果非合作伙伴请不要开issue。
+
+- 任何描述不清楚、代码(拜托请别截图)懒得给出的 issue 将会直接 `关闭`、`锁定`、打上 `yet another bad issue 标签`;
+- 在 issue 下提无关问题会被直接 `删除`;
+
+## 快速上手
+
+### 依赖
+
++ 插件支持的手机系统版本：
+
+  !> IOS建议SDK版本 **8.0+**。
+
+  !> Android SDK版本 **4.4+**。
+
++ 因为项目中使用了`Promise`来包裹每一个接口，而苹果和安卓（或者说安卓自身各个SDK下的浏览器版本）不同系统的浏览器内核对于`Promise`的支持并不相同（[Promises浏览器兼容一览表](http://caniuse.mojijs.com/Home/Html/item/key/promises/index.html)），所以大家在使用本SDK前必须要手动检测，并适当开启针对`Promise`的浏览器polyfill，推荐:
+
+  > [es6-promise](https://www.npmjs.com/package/es6-promise)；
+
+  > [promise-polyfill](https://www.npmjs.com/package/promise-polyfill)；
+
+  - 进行polyfill可能的代码：
+
+  ```js
+  import Promise from 'promise-polyfill';
+
+  // To add to window
+  if (!window.Promise) {
+    window.Promise = Promise;
+  }
+  ```
+
+### 安装
+
++ npm：
+
+``` bash
+  npm install ynrcc-mobilebank-jssdk
+```
+
++ cdn
+
+``` bash
+  # 待补充
+```
+
+### 配置
+
++ 第一种可能的使用方式：直接注入针对浏览器构建的版本*ynrcc-mobilebank-jssdk.js*使用
+
+  ``` html
+  <!-- 1.引入JS文件 **备注：支持使用 AMD/CMD 标准模块加载方法加载**-->
+  <script src="./dist/ynrcc-mobilebank-jssdk.js"></script>
+
+  <!-- 2.通过config接口注入权限验证配置 -->
+  <script type="text/javascript">
+    window.onload = function () {
+      ynrcc.JSBridge.config({
+        debug: true, // 开启调试模式,在PC端开发调试面板中会输出log，如果希望在手机端输出，这里推荐一个插件[Tencent/vConsole](https://github.com/Tencent/vConsole)
+        appId: '', // 必填，唯一标识
+        timestamp: , // 必填，生成签名的时间戳
+        nonceStr: '', // 必填，生成签名的随机串
+        signature: '',// 必填，签名，见附录1
+        jsApiList: [] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+      })
+    }
+
+    // 模拟调用测试：
+    jsBridge.goBack()
+  </script>
+  ```
+
+
++ 推荐的使用方式：针对es模块系统构建的版本*ynrcc-mobilebank-jssdk.mjs*使用，以Vue搭建的项目为例
+
+  ``` js
+  import Vue from 'vue'
+  import App from './App.vue'
+  // 1.通过npm安装了sdk之后，通过下面方式引入应用
+  import {JSBridge} from 'JSBridge'
+
+  // 2.通过config接口注入权限验证配置
+  const jsBridge = JSBridge.config({
+    global: window,
+    debug: true
+  })
+
+  new Vue({
+    el: '#app',
+    render: h => h(App),
+    mounted() {
+      // 模拟调用测试：
+      jsBridge.goBack()
+    }
+  })
+```
+
++ 接口调用说明
+
+  - 所有接口通过JSBridge.config配置之后返回的对象来调用，参数是一个对象，除了每个接口本身返回的是一个`Promise`对象，通过`then`处理调用成功的情况，通过`catch`处理调用失败的情况，类似：
+
+    ```js
+      jsBridge.goBack.then(res => {
+        // 处理调用成功的情况
+      }).catch(err => {
+        // 处理调用失败的情况
+      })
+  ```
+
+  - `then`中返回的通用参数列表：(待补充)
+
+    返回的JSON数据包如下：
+
+    ```js
+    // TODO 待补充
+    ```
+
+    <table>
+      <tr>
+        <th>参数</th>
+        <th>描述</th>
+      </tr>
+        <tr>
+            <td>DataMap</td>
+            <td>包含业务处理返回值的JSON对象，如果对于接口描述有返回值的情况。</td>
+        </tr>
+        <tr>
+            <td>Date</td>
+            <td>处理时间</td>
+        </tr>
+    </table>
+
+  - `catch`中一般为调用接口出现错误，返回的通用参数列表：(待补充)
+
+    返回的JSON数据包如下：
+
+    ```js
+    // TODO 待补充
+    ```
+
+    <table>
+      <tr>
+        <th>参数</th>
+        <th>描述</th>
+      </tr>
+        <tr>
+            <td>RetrunCode</td>
+            <td>状态码，标识错误的标记，方便查错</td>
+        </tr>
+        <tr>
+            <td>ReturnMessage</td>
+            <td>错误通知消息</td>
+        </tr>
+    </table>
+
+## 接口列表
+
+### 获取“分享到朋友圈”按钮点击状态及自定义分享内容接口
+
+```js
+// 待补充
+```
+
+
+## 附录1
+
+### 签名算法
+
+签名生成规则如下：参与签名的字段包括noncestr（随机字符串）, timestamp（时间戳）, url（当前网页的URL，不包含#及其后面部分） 。对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&key2=value2…）拼接成字符串string1。这里需要注意的是所有参数名均为小写字符。对string1作sha1加密，字段名和字段值都采用原始值，不进行URL 转义。
+
+即signature=sha1(string1)。 示例：
+
+``` js
+noncestr=xxx
+timestamp=1414587457
+url=https://www.baidu.com?params=value
+```
+
+步骤1. 对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&key2=value2…）拼接成字符串string1：
+
+``` js
+noncestr=xxx&timestamp=1414587457&url=https://www.baidu.com?params=value
+```
+
+步骤2. 对string1进行sha1签名，得到signature：
+
+``` js
+xxxde62fce790f9a083d5c99e95740ceb90c27ed
+```
+
+注意事项
+
+1.签名用的noncestr和timestamp必须与ynrcc.JSBridge.config中的nonceStr和timestamp相同。
+
+2.签名用的url必须是调用JS接口页面的完整URL。
+
+3.出于安全考虑，开发者必须在服务器端实现签名的逻辑。
+
+
+
+## 项目文件说明
 
 ### lib/index.js
 
-This is the main source file in your application, and the main file you'll start
-editing to implement the functionality of your package. As shown in this
-example, you can `import` other files from this file similarly to how you would
-`require` packages typically
+这个是项目入口文件。
+
+- 不建议直接clone源代码进行修改。
 
 ### test/index_test.js
 
-This is the starting point for tests in your package. You should import the
-code to test from `lib/` as shown in the example. The project is already
-configured to use mocha when you run `npm test`.
+这个是项目的测试入口文件。
+
+- sdk所有接口均通过`mocha`进行模拟测试，因为接口需要运行在手机银行客户端，并依赖其保留的上下文对象，故测试只能做到[打桩测试](https://baike.baidu.com/item/%E6%A1%A9%E6%A8%A1%E5%9D%97)；
+- 凡是[文档](https://jiiiiiin.github.io/ynrcc-mobilebank-jssdk/#/)中描述的接口我们都进行过内部测试，如果在某些`Android`设备上存在问题（因为总所周知Android碎片化比较厉害），那么请提交`issue`进行详细的bug重现报告
 
 ### dist/ynrcc-mobilebank-jssdk.js
 
-This is the `main` file of the package and includes all the code needed to run
-your package. It is in UMD format, meaning it can be used in most JavaScript
-runtime environments. If your package has dependencies you do not want bundled,
-be sure to configure rollup to exclude them by marking them as `external`. By
-default all `dependencies` entries in your `package.json` will be `external`.
+这是sdk的[UMD](https://leohxj.gitbooks.io/front-end-database/javascript-modules/about-umd.html)格式主文件，可以运行在大多数的JavaScript运行环境。
 
 ### dist/ynrcc-mobilebank-jssdk.mjs
 
-This is the `jsnext:main` file of the package and includes all the code needed
-to run your package. Compared to the UMD version, this one preserves ES6 imports
-and exports at the package boundary for tools that support it (such as rollup).
-If your package has dependencies you do not want bundled, be sure to configure
-rollup to exclude them by marking them as `external`. By default all
-`dependencies` entries in your `package.json` will be `external`.
+这是sdk的[ES](https://leohxj.gitbooks.io/front-end-database/javascript-modules/about-umd.html)格式主文件，如果你的应用使用类似Vue或者React类似技术，那么建议使用该版本。
 
-### .eslintrc
 
-This controls how the package is linted and starts off with the recommended set
-of rules from eslint itself. It also uses `babel-eslint` to parse your code,
-allowing syntax that the standard eslint parser may not understand (e.g. type
-annotations).
+## 项目维护者
 
-## Dependencies
-
-This section explains what all the dependencies are and what they're for, so
-you can decide which ones you actually need.
-
-### babel-eslint
-
-Enables eslint to understand all JavaScript syntax that
-[babel](http://babeljs.io) understands, and adds a few rules for linting ES2015
-code. This can be removed if you plan not to use babel to transform ES2015 code
-to ES5 or if you plan not to use eslint.
-
-### babel-plugin-external-helpers
-
-Ensures that only one copy of each babel helper is included in the bundle when
-used with rollup. This can be removed if you plan not to use babel to transform
-ES2015 code to ES5.
-
-### babel-preset-es2015
-
-Used when babel is used without rollup, and referenced by the `.babelrc` file.
-This can be removed if you plan not to use babel to transform ES2015 code to ES5
-or you plan to specify all the babel plugins manually.
-
-### babel-register
-
-Provides on-demand transpilation via babel so no precompilation is required.
-This is used in the tests to allow running them without compiling first, and is
-referenced in `test/mocha.opts`.
-
-### babelrc-rollup
-
-Handles transforming the babel config from `.babelrc` to one suitable for use
-with `rollup-plugin-babel`, where you don't want to use any module plugins.
-
-### eslint
-
-[eslint](http://eslint.org) checks your code for common errors and ensures it
-adheres to the style you configure in `.eslintrc`. You can remove this if you
-plan not to lint your code or if you're using another linter, such as
-[jshint](http://jshint.com) or [jscs](http://jscs.info).
-
-### mocha
-
-[mocha](https://mochajs.org) is a test runner. You can remove this if you plan
-not to write tests (don't do that!) or if you plan to use another test runner
-such as [Jasmine](http://jasmine.github.io).
-
-### istanbul
-
-[istanbul](https://github.com/gotwarlost/istanbul) is a code coverage tool that
-computes statement, line, function and branch coverage with module loader hooks
-to transparently add coverage when running tests. You can remove this dependency
-if you won't be writing tests or you don't care about code coverage.
-
-You'll also have to change the `test/mocha.opts` file and remove the custom
-reporter option `--reporter test/istanbul.reporter.js`. After that you can safely
-delete the `test/istanbul.reporter.js` file.
-
-### rollup
-
-[rollup](http://rollupjs.org) is a JavaScript module bundler and the reason
-you're looking at this project in the first place, so you probably don't want
-to remove this dependency.
-
-### rollup-plugin-babel
-
-This plugin enables support for [babel](http://babeljs.io), which transforms
-ES2015 code to ES5. You can remove this if you plan not to use ES2015 code.
-
-### rollup-plugin-istanbul
-
-This plugin provides seamless integration between Rollup and
-[Istanbul](https://github.com/gotwarlost/istanbul) to generate code coverage
-reports of your project. If you don't plan to write tests or simply don't care
-about code coverage, you can safely remove this along with Istanbul.
-
-Just like with the Istanbul dependency, you should change the `test/mocha.opts`
-file. Read the above instructions for removing Istanbul.
++ [z.jiiiiiin](https://github.com/Jiiiiiin)
