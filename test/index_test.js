@@ -49,7 +49,7 @@ describe('连通性测试', () => {
     })
 
     it('测试正常情况', () => {
-      jsBridge.goBack().then((res)=>{
+      jsBridge.closeWindow().then((res)=>{
         console.log('1111', res);
         expect(res['ReturnCode']).to.be.equal('000000')
       })
@@ -80,7 +80,7 @@ describe('连通性测试', () => {
     })
 
     it('测试业务返回非000000情况', () => {
-      jsBridge.goBack().catch((err)=>{
+      jsBridge.closeWindow().catch((err)=>{
         expect(err['ReturnCode']).to.be.equal('time_out')
       })
     })
@@ -108,7 +108,7 @@ describe('连通性测试', () => {
     })
 
     it('模拟客户端返回json字符串格式有误的情况', () => {
-      jsBridge.goBack().catch((err)=>{
+      jsBridge.closeWindow().catch((err)=>{
         // expect(err).to.throw(SyntaxError)
         expect(err['ReturnCode']).to.be.equal('parse_client_res_err')
       })
