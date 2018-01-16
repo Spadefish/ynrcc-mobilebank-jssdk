@@ -26,7 +26,7 @@ import {expect} from 'chai'
 const JSBridge = require('../lib').JSBridge
 
 /* eslint-disable no-console */
-describe('连通性测试，测试正常情况', () => {
+describe('连通性测试', () => {
 
     let jsBridge = null
     before(function () {
@@ -48,14 +48,15 @@ describe('连通性测试，测试正常情况', () => {
       }, debug: true})
     })
 
-    it('goBack测试', () => {
+    it('测试正常情况', () => {
       jsBridge.goBack().then((res)=>{
+        console.log('1111', res);
         expect(res['ReturnCode']).to.be.equal('000000')
       })
     })
 })
 
-describe('连通性测试，测试业务返回非000000情况', () => {
+describe('连通性测试', () => {
 
     let jsBridge = null
     before(function () {
@@ -78,7 +79,7 @@ describe('连通性测试，测试业务返回非000000情况', () => {
       }, debug: true})
     })
 
-    it('goBack测试', () => {
+    it('测试业务返回非000000情况', () => {
       jsBridge.goBack().catch((err)=>{
         expect(err['ReturnCode']).to.be.equal('time_out')
       })
@@ -86,7 +87,7 @@ describe('连通性测试，测试业务返回非000000情况', () => {
 })
 
 
-describe('模拟客户端返回json字符串格式有误的情况', () => {
+describe('连通性测试', () => {
 
     let jsBridge = null
     before(function () {
@@ -106,7 +107,7 @@ describe('模拟客户端返回json字符串格式有误的情况', () => {
       }, debug: true})
     })
 
-    it('goBack测试', () => {
+    it('模拟客户端返回json字符串格式有误的情况', () => {
       jsBridge.goBack().catch((err)=>{
         // expect(err).to.throw(SyntaxError)
         expect(err['ReturnCode']).to.be.equal('parse_client_res_err')
