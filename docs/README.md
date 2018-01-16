@@ -12,14 +12,6 @@
 + [中文文档](https://jiiiiiin.github.io/ynrcc-mobilebank-jssdk/#/)
 + English(working)
 
-
-## Issues
-
-`ynrcc-mobilebank-jssdk` 是为云南农信手机银行面向网页开发者提供的基于客户端内的网页开发工具包，如果非合作伙伴请不要开issue。
-
-- 任何描述不清楚、代码(拜托请别截图)懒得给出的 issue 将会直接 `关闭`、`锁定`、打上 `yet another bad issue 标签`;
-- 在 issue 下提无关问题会被直接 `删除`;
-
 ## 快速上手
 
 ### 依赖
@@ -74,6 +66,9 @@
     window.onload = function () {
       ynrcc.JSBridge.config({
         debug: true, // 开启调试模式,在PC端开发调试面板中会输出log，如果希望在手机端输出，这里推荐一个插件[Tencent/vConsole](https://github.com/Tencent/vConsole)
+        errorHandler(err){
+          // 指定和客户端交互过程中抛出的错误的处理函数。应用可以使用该函数来统一处理非业务级别的公共错误消息。
+        }
         appId: '', // 必填，唯一标识
         timestamp: , // 必填，生成签名的时间戳
         nonceStr: '', // 必填，生成签名的随机串
@@ -99,7 +94,10 @@
   // 2.通过config接口注入权限验证配置
   const jsBridge = JSBridge.config({
     global: window,
-    debug: true
+    debug: process.env.NODE_ENV !== 'production',
+    errorHandler(err){
+      // 指定和客户端交互过程中抛出的错误的处理函数。应用可以使用该函数来统一处理非业务级别的公共错误消息。
+    }
   })
 
   new Vue({
@@ -233,7 +231,42 @@ xxxde62fce790f9a083d5c99e95740ceb90c27ed
 
 3.出于安全考虑，开发者必须在服务器端实现签名的逻辑。
 
+## 测试
 
+jssdk前端代码使用mocha完成了mock测试，所有接口都经过自身的集成测试；
+
+```js
+> ynrcc-mobilebank-jssdk@1.0.0 test /Users/jiiiiiin/Documents/Atom/ynrcc-mobilebank-jssdk
+> mocha
+
+
+
+  连通性测试
+[ynrcc-jssdk] 混合navigation模块开始
+[ynrcc-jssdk] 混合navigation模块完成
+    ✓ 测试正常情况
+1111 { ReturnCode: '000000' }
+
+  连通性测试
+[ynrcc-jssdk] 混合navigation模块开始
+[ynrcc-jssdk] 混合navigation模块完成
+    ✓ 测试业务返回非000000情况
+
+  连通性测试
+[ynrcc-jssdk] 混合navigation模块开始
+[ynrcc-jssdk] 混合navigation模块完成
+    ✓ 模拟客户端返回json字符串格式有误的情况
+
+
+  3 passing (60ms)
+```
+
+## Issues
+
+`ynrcc-mobilebank-jssdk` 是为云南农信手机银行面向网页开发者提供的基于客户端内的网页开发工具包，如果非合作伙伴请不要开issue。
+
+- 任何描述不清楚、代码(拜托请别截图)懒得给出的 issue 将会直接 `关闭`、`锁定`、打上 `yet another bad issue 标签`;
+- 在 issue 下提无关问题会被直接 `删除`;
 
 ## 项目文件说明
 
