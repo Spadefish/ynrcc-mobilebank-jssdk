@@ -20,7 +20,7 @@ const jsBridge = JSBridge.config({
   global: window,
   debug: true,
   errorHandler(err){
-    alert(err)
+    alert(JSON.stringify(err))
   }
 })
 Vue.use(new VConsole())
