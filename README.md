@@ -180,6 +180,7 @@
 jsBridge.shareToWeChart({
     title: '', // 分享标题
     link: '', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+    description: '', // 分享描述
     imgUrl: '', // 分享图标
 }).then(res => {
   // 用户确认分享后执行的回调函数
@@ -194,7 +195,15 @@ jsBridge.shareToWeChart({
 jsBridge.closeWindow()
 ```
 
-
+### 发起支付，获取支付结果
+```js
+jsBridge.pullPayPage({
+}).then(res => {
+    // 用户支付成功后执行的回调函数
+}).catch(error => {
+    // 用户支付失败后执行的回调函数
+})
+```
 ## 附录1
 
 ### 签名算法

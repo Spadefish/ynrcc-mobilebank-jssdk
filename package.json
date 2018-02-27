@@ -67,8 +67,10 @@
     "rollup-plugin-istanbul": "^1.1.0",
     "rollup-plugin-uglify": "^2.0.1",
     "rollup-watch": "^4.0.0",
+    "vconsole": "^3.1.0",
     "vue": "^2.5.13",
     "vue-loader": "^13.0.5",
+    "vue-router": "^3.0.1",
     "vue-template-compiler": "^2.4.4",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.9.1"

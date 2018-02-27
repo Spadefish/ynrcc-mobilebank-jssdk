@@ -1,19 +1,20 @@
 <template>
 <div id="app">
   <h1>{{ msg }}</h1>
-  <h2>Essential Links</h2>
+  <h2>导航相关</h2>
   <ul>
-    <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-    <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-    <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-    <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
+    <li><a @click="closeWindow">关闭网页窗口</a></li>
+    <li><a @click="setTitleBar(0)">显示导航栏</a></li>
+    <li><a @click="setTitleBar(1)">隐藏导航栏</a></li>
+    <li><a @click="h5loaded">通知客户端网页加载完毕</a></li>
   </ul>
-  <h2>Ecosystem</h2>
+  <h2>分享</h2>
   <ul>
-    <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-    <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-    <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-    <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
+    <li><a @click="shareToWeChat">微信分享</a></li>
+  </ul>
+  <h2>支付</h2>
+  <ul>
+    <li><a @click="pullPayPage">调取支付页面</a></li>
   </ul>
 </div>
 </template>
@@ -23,7 +24,36 @@ export default {
   name: 'app',
   data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: '云南农信手机银行JS-SDK示例'
+    }
+  },
+  methods: {
+    closeWindow() {
+      this.jsBridge.closeWindow()
+    },
+    setTitleBar(type) {
+      this.jsBridge.setTitleBar('测试', type === 0 ? true : false)
+    },
+    h5loaded() {
+      this.jsBridge.h5loaded()
+    },
+    shareToWeChat() {
+      this.jsBridge.shareToWeChat({
+        link: 'https://www.baidu.com/',
+        title: '分享测试',
+        description: '啦啦啦，开始测试了',
+        imgUrl: 'http://emobile.jiiiiiin.cn/static/Comm/BankIcons/fudian@2x.png'}).then(res => {
+        alert(`success=》${JSON.stringify(res)}`)
+      }).catch(error => {
+        alert(error)
+      })
+    },
+    pullPayPage() {
+      jsBridge.pullPayPage('genToken2.do', {params1: 1, params2: 2}, {a:1, b: 1, c:2}).then(res => {
+        alert(`success=》${JSON.stringify(res)}`)
+      }).catch(error => {
+        alert(error)
+      })
     }
   }
 }
@@ -37,11 +67,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-}
-
-h1,
-h2 {
-  font-weight: normal;
 }
 
 ul {
