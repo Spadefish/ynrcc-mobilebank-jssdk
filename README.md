@@ -124,7 +124,7 @@
     返回的JSON数据包如下：
 
     ```js
-	{ReturnCode: '444444', ReturnMessage: 'success', xxx: 'xxx'...}
+	{ReturnCode: '000000', ReturnMessage: 'success', xxx: 'xxx'...}
     ```
 
     <table>
@@ -147,7 +147,7 @@
     返回的JSON数据包如下：
 
     ```js
-    {ReturnCode: '000000', ReturnMessage: 'success', xxx: 'xxx'...}
+    {ReturnCode: '444444', ReturnMessage: 'xxx', xxx: 'xxx'...}
     ```
 
     <table>
