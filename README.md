@@ -63,22 +63,14 @@
 
   <!-- 2.通过config接口注入权限验证配置 -->
   <script type="text/javascript">
-    window.onload = function () {
-      ynrcc.JSBridge.config({
-        debug: true, // 开启调试模式,在PC端开发调试面板中会输出log，如果希望在手机端输出，这里推荐一个插件[Tencent/vConsole](https://github.com/Tencent/vConsole)
-        errorHandler(err){
-          // 指定和客户端交互过程中抛出的错误的处理函数。应用可以使用该函数来统一处理非业务级别的公共错误消息。
-        }
-        appId: '', // 必填，唯一标识
-        timestamp: , // 必填，生成签名的时间戳
-        nonceStr: '', // 必填，生成签名的随机串
-        signature: '',// 必填，签名，见附录1
-        jsApiList: [] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-      })
-    }
-
-    // 模拟调用测试：
-    jsBridge.goBack()
+	const jsBridge = ynrcc.JSBridge.config({
+	        debug: true, // 开启调试模式,在PC端开发调试面板中会输出log，如果希望在手机端输出，这里推荐一个插件[Tencent/vConsole](https://github.com/Tencent/vConsole)
+	        errorHandler(err){
+	          // 指定和客户端交互过程中抛出的错误的处理函数。应用可以使用该函数来统一处理非业务级别的公共错误消息。
+	        }
+	      })
+	    // 模拟调用测试：
+	    jsBridge.closeWindow()
   </script>
   ```
 
@@ -132,20 +124,21 @@
     返回的JSON数据包如下：
 
     ```js
-    // TODO 待补充
+	{ReturnCode: '444444', ReturnMessage: 'success', xxx: 'xxx'...}
     ```
+
     <table>
       <tr>
         <th>参数</th>
         <th>描述</th>
       </tr>
         <tr>
-            <td>DataMap</td>
-            <td>如果接口声明会返回结果，那么返回的结果都将放置到该字段，一个的JSON对象。</td>
-        </tr>
-        <tr>
             <td>ReturnCode</td>
             <td>000000</td>
+        </tr>
+         <tr>
+            <td>ReturnMessage</td>
+            <td>接口返回的业务错误如：'用户取消分享'</td>
         </tr>
     </table>
 
@@ -154,7 +147,7 @@
     返回的JSON数据包如下：
 
     ```js
-    // TODO 待补充
+    {ReturnCode: '000000', ReturnMessage: 'success', xxx: 'xxx'...}
     ```
 
     <table>
@@ -180,6 +173,7 @@
 jsBridge.shareToWeChart({
     title: '', // 分享标题
     link: '', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+    description: '', //分享描述
     imgUrl: '', // 分享图标
 }).then(res => {
   // 用户确认分享后执行的回调函数
@@ -194,7 +188,23 @@ jsBridge.shareToWeChart({
 jsBridge.closeWindow()
 ```
 
+### 原生导航栏设置
 
+```js
+jsBridge.setTitleBar({
+	title: '',//标题
+	visible: ''//true:显示导航栏，false:隐藏导航栏
+}')
+```
+### 获取当前登录用户信息
+
+```js
+jsBridge.getUserInfo().then(res => {
+  // 获取成功后执行的回调函数
+}).catch(err => {
+  // 获取失败（用户未登录等错误）后执行的回调函数
+})
+```
 ## 附录1
 
 ### 签名算法
