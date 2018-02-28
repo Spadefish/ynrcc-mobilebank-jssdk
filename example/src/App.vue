@@ -36,7 +36,10 @@ export default {
       this.jsBridge.closeWindow()
     },
     setTitleBar(type) {
-      this.jsBridge.setTitleBar('测试', type === 0 ? true : false)
+      this.jsBridge.setTitleBar({
+        title: '测试',
+        visible: type === 0 ? true : false
+      })
     },
     h5loaded() {
       this.jsBridge.h5loaded()

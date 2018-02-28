@@ -56,7 +56,7 @@ module.exports = {
     historyApiFallback: true,
     noInfo: true,
     overlay: true,
-    host: '192.168.1.104',
+    host: '192.168.1.105',
     port: '8888'
   },
   performance: {

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>123</title>
+    <!--<script src="/dist/build.js"></script>-->
+    <script src="./dist/ynrcc-mobilebank-jssdk.js"></script>
+    <script type="text/javascript">
+      const jsBridge = ynrcc.JSBridge.config({
+        debug: true, // 开启调试模式,在PC端开发调试面板中会输出log，如果希望在手机端输出，这里推荐一个插件Tencent/vConsole
+        errorHandler(err){
+          alert(JSON.stringify(err))
+        }
+      })
+      console.log('直接注入针对浏览器构建的版本*ynrcc-mobilebank-jssdk.js*使用方式', ynrcc.JSBridge)
+      console.log(jsBridge)
+      function back() {
+        jsBridge.closeWindow();
+      }
+      function share() {
+        jsBridge.shareToWeChat({
+          link: 'https://www.baidu.com/',
+          title: '分享测试',
+          description: '啦啦啦，开始测试了',
+          imgUrl: 'http://emobile.jiiiiiin.cn/static/Comm/BankIcons/fudian@2x.png'}).then(res => {
+          alert(`success=》${JSON.stringify(res)}`)
+        }).catch(error => {
+          alert(JSON.stringify(error))
+        })
+      }
+      function getUserInfo() {
+        jsBridge.getUserInfo().then(res => {
+          alert(JSON.stringify(res))
+        }).catch(err => {
+          alert(JSON.stringify(err))
+        })
+      }
+    </script>
+   <style>
+     body {
+       text-align: center;
+     }
+     a {
+       font-size:25px
+     }
+   </style>
+</head>
+
+<body>
+  <a onclick="back()">返回手机银行</a><br><br>
+  <a onclick="share()">微信分享</a><br><br>
+  <a onclick="getUserInfo()">微信分享</a><br><br>
+</body>
+</html>
