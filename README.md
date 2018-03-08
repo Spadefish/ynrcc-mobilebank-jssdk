@@ -63,14 +63,25 @@
 
   <!-- 2.通过config接口注入权限验证配置 -->
   <script type="text/javascript">
-	const jsBridge = ynrcc.JSBridge.config({
-	        debug: true, // 开启调试模式,在PC端开发调试面板中会输出log，如果希望在手机端输出，这里推荐一个插件[Tencent/vConsole](https://github.com/Tencent/vConsole)
-	        errorHandler(err){
-	          // 指定和客户端交互过程中抛出的错误的处理函数。应用可以使用该函数来统一处理非业务级别的公共错误消息。
-	        }
-	      })
-	    // 模拟调用测试：
-	    jsBridge.closeWindow()
+	let jsBridge = null
+	ynrcc.JSBridge.config({
+		debug: true, // 开启调试模式,在PC端开发调试面板中会输出log，如果希望在手机端输出，这里推荐一个插件[Tencent/vConsole](https://github.com/Tencent/vConsole)
+		appId: '', // 必填，唯一标识
+		timestamp: '', // 必填，生成签名的时间戳
+		nonceStr: '',  // 必填，生成签名的随机串
+		signature: '', // 必填，签名，见附录1
+		url: '', // 当前网页的URL，不包含#及其后面部分
+		jsApiList: [], // 必填，需要使用的JS接口列表
+		errorHandler(err){
+		// 指定和客户端交互过程中抛出的错误的处理函数。应用可以使用该函数来统一处理非业务级别的公共错误消息。
+		}
+	}).then((bridge) => {
+    jsBridge = bridge
+	}).catch(err => {
+		// 配置错误所抛出的错误，如验签失败等
+	})
+	// 模拟调用测试：
+	jsBridge.closeWindow()
   </script>
   ```
 
@@ -78,19 +89,29 @@
 + 推荐的使用方式：针对es模块系统构建的版本*ynrcc-mobilebank-jssdk.mjs*使用，以Vue搭建的项目为例
 
   ``` js
-  import Vue from 'vue'
-  import App from './App.vue'
-  // 1.通过npm安装了sdk之后，通过下面方式引入应用
-  import {JSBridge} from 'JSBridge'
-
-  // 2.通过config接口注入权限验证配置
-  const jsBridge = JSBridge.config({
-    global: window,
-    debug: process.env.NODE_ENV !== 'production',
-    errorHandler(err){
-      // 指定和客户端交互过程中抛出的错误的处理函数。应用可以使用该函数来统一处理非业务级别的公共错误消息。
-    }
-  })
+	import Vue from 'vue'
+	import App from './App.vue'
+	// 1.通过npm安装了sdk之后，通过下面方式引入应用
+	import {JSBridge} from 'JSBridge'
+	// 2.通过config接口注入权限验证配置
+	let jsBridge = null
+	JSBridge.config({
+		global: window,
+		debug: true,
+		appId: '',
+		timestamp: '',
+		nonceStr: '',
+		signature: '',
+		url: '',
+		jsApiList: [],
+		errorHandler(err){
+			alert(JSON.stringify(err))
+		}
+	}).then((bridge) => {
+		jsBridge = bridge
+	}).catch(err => {
+		alert(JSON.stringify(err))
+	})
 
   new Vue({
     el: '#app',
@@ -214,6 +235,7 @@ jsBridge.getUserInfo().then(res => {
 即signature=sha1(string1)。 示例：
 
 ``` js
+appid=xxx
 noncestr=xxx
 timestamp=1414587457
 url=https://www.baidu.com?params=value
@@ -222,7 +244,7 @@ url=https://www.baidu.com?params=value
 步骤1. 对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&key2=value2…）拼接成字符串string1：
 
 ``` js
-noncestr=xxx&timestamp=1414587457&url=https://www.baidu.com?params=value
+appid=xxx&noncestr=xxx&timestamp=1414587457&url=https://www.baidu.com?params=value
 ```
 
 步骤2. 对string1进行sha1签名，得到signature：
