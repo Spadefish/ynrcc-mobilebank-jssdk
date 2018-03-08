@@ -47,12 +47,6 @@
   npm install ynrcc-mobilebank-jssdk
 ```
 
-+ cdn
-
-``` bash
-  # 待补充
-```
-
 ### 配置
 
 + 第一种可能的使用方式：直接注入针对浏览器构建的版本*ynrcc-mobilebank-jssdk.js*使用
@@ -76,7 +70,7 @@
 		// 指定和客户端交互过程中抛出的错误的处理函数。应用可以使用该函数来统一处理非业务级别的公共错误消息。
 		}
 	}).then((bridge) => {
-    jsBridge = bridge
+        jsBridge = bridge
 	}).catch(err => {
 		// 配置错误所抛出的错误，如验签失败等
 	})
@@ -159,7 +153,7 @@
         </tr>
          <tr>
             <td>ReturnMessage</td>
-            <td>接口返回的业务错误如：'用户取消分享'</td>
+            <td>接口返回的成功消息如：'分享成功'</td>
         </tr>
     </table>
 
@@ -182,13 +176,13 @@
         </tr>
         <tr>
             <td>ReturnMessage</td>
-            <td>错误通知消息</td>
+            <td>接口返回的业务错误如：'用户取消分享'</td>
         </tr>
     </table>
 
 ## 接口列表
 
-### 分享到微信（朋友圈或者好友），支持自定义分享内容接口
+#### 分享到微信（朋友圈或者好友），支持自定义分享内容接口
 
 ```js
 jsBridge.shareToWeChart({
@@ -203,13 +197,13 @@ jsBridge.shareToWeChart({
 })
 ```
 
-### 关闭当前网页窗口接口
+#### 关闭当前网页窗口接口
 
 ```js
 jsBridge.closeWindow()
 ```
 
-### 原生导航栏设置
+#### 原生导航栏设置
 
 ```js
 jsBridge.setTitleBar({
@@ -217,7 +211,7 @@ jsBridge.setTitleBar({
 	visible: ''//true:显示导航栏，false:隐藏导航栏
 }')
 ```
-### 获取当前登录用户信息
+#### 获取当前登录用户信息
 
 ```js
 jsBridge.getUserInfo().then(res => {
