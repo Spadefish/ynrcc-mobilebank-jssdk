@@ -41,7 +41,7 @@
 
 ### 安装
 
-+ npm：
++ npm：https://www.npmjs.com/package/ynrcc-mobilebank-jssdk
 
 ``` bash
   npm install ynrcc-mobilebank-jssdk
