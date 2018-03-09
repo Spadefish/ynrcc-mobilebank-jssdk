@@ -47,12 +47,6 @@
   npm install ynrcc-mobilebank-jssdk
 ```
 
-+ cdn
-
-``` bash
-  # 待补充
-```
-
 ### 配置
 
 + 第一种可能的使用方式：直接注入针对浏览器构建的版本*ynrcc-mobilebank-jssdk.js*使用
@@ -63,22 +57,25 @@
 
   <!-- 2.通过config接口注入权限验证配置 -->
   <script type="text/javascript">
-    window.onload = function () {
-      ynrcc.JSBridge.config({
-        debug: true, // 开启调试模式,在PC端开发调试面板中会输出log，如果希望在手机端输出，这里推荐一个插件[Tencent/vConsole](https://github.com/Tencent/vConsole)
-        errorHandler(err){
-          // 指定和客户端交互过程中抛出的错误的处理函数。应用可以使用该函数来统一处理非业务级别的公共错误消息。
-        }
-        appId: '', // 必填，唯一标识
-        timestamp: , // 必填，生成签名的时间戳
-        nonceStr: '', // 必填，生成签名的随机串
-        signature: '',// 必填，签名，见附录1
-        jsApiList: [] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-      })
-    }
-
-    // 模拟调用测试：
-    jsBridge.goBack()
+	let jsBridge = null
+	ynrcc.JSBridge.config({
+		debug: true, // 开启调试模式,在PC端开发调试面板中会输出log，如果希望在手机端输出，这里推荐一个插件[Tencent/vConsole](https://github.com/Tencent/vConsole)
+		appId: '', // 必填，唯一标识
+		timestamp: '', // 必填，生成签名的时间戳
+		nonceStr: '',  // 必填，生成签名的随机串
+		signature: '', // 必填，签名，见附录1
+		url: '', // 当前网页的URL，不包含#及其后面部分
+		jsApiList: [], // 必填，需要使用的JS接口列表
+		errorHandler(err){
+		// 指定和客户端交互过程中抛出的错误的处理函数。应用可以使用该函数来统一处理非业务级别的公共错误消息。
+		}
+	}).then((bridge) => {
+        jsBridge = bridge
+	}).catch(err => {
+		// 配置错误所抛出的错误，如验签失败等
+	})
+	// 模拟调用测试：
+	jsBridge.closeWindow()
   </script>
   ```
 
@@ -86,19 +83,29 @@
 + 推荐的使用方式：针对es模块系统构建的版本*ynrcc-mobilebank-jssdk.mjs*使用，以Vue搭建的项目为例
 
   ``` js
-  import Vue from 'vue'
-  import App from './App.vue'
-  // 1.通过npm安装了sdk之后，通过下面方式引入应用
-  import {JSBridge} from 'JSBridge'
-
-  // 2.通过config接口注入权限验证配置
-  const jsBridge = JSBridge.config({
-    global: window,
-    debug: process.env.NODE_ENV !== 'production',
-    errorHandler(err){
-      // 指定和客户端交互过程中抛出的错误的处理函数。应用可以使用该函数来统一处理非业务级别的公共错误消息。
-    }
-  })
+	import Vue from 'vue'
+	import App from './App.vue'
+	// 1.通过npm安装了sdk之后，通过下面方式引入应用
+	import {JSBridge} from 'JSBridge'
+	// 2.通过config接口注入权限验证配置
+	let jsBridge = null
+	JSBridge.config({
+		global: window,
+		debug: true,
+		appId: '',
+		timestamp: '',
+		nonceStr: '',
+		signature: '',
+		url: '',
+		jsApiList: [],
+		errorHandler(err){
+			alert(JSON.stringify(err))
+		}
+	}).then((bridge) => {
+		jsBridge = bridge
+	}).catch(err => {
+		alert(JSON.stringify(err))
+	})
 
   new Vue({
     el: '#app',
@@ -132,20 +139,21 @@
     返回的JSON数据包如下：
 
     ```js
-    // TODO 待补充
+	{ReturnCode: '000000', ReturnMessage: 'success', xxx: 'xxx'...}
     ```
+
     <table>
       <tr>
         <th>参数</th>
         <th>描述</th>
       </tr>
         <tr>
-            <td>DataMap</td>
-            <td>如果接口声明会返回结果，那么返回的结果都将放置到该字段，一个的JSON对象。</td>
-        </tr>
-        <tr>
             <td>ReturnCode</td>
             <td>000000</td>
+        </tr>
+         <tr>
+            <td>ReturnMessage</td>
+            <td>接口返回的成功消息如：'分享成功'</td>
         </tr>
     </table>
 
@@ -154,7 +162,7 @@
     返回的JSON数据包如下：
 
     ```js
-    // TODO 待补充
+    {ReturnCode: '444444', ReturnMessage: 'xxx', xxx: 'xxx'...}
     ```
 
     <table>
@@ -168,18 +176,19 @@
         </tr>
         <tr>
             <td>ReturnMessage</td>
-            <td>错误通知消息</td>
+            <td>接口返回的业务错误如：'用户取消分享'</td>
         </tr>
     </table>
 
 ## 接口列表
 
-### 分享到微信（朋友圈或者好友），支持自定义分享内容接口
+#### 分享到微信（朋友圈或者好友），支持自定义分享内容接口
 
 ```js
 jsBridge.shareToWeChart({
     title: '', // 分享标题
     link: '', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+    description: '', //分享描述
     imgUrl: '', // 分享图标
 }).then(res => {
   // 用户确认分享后执行的回调函数
@@ -188,13 +197,29 @@ jsBridge.shareToWeChart({
 })
 ```
 
-### 关闭当前网页窗口接口
+#### 关闭当前网页窗口接口
 
 ```js
 jsBridge.closeWindow()
 ```
 
+#### 原生导航栏设置
 
+```js
+jsBridge.setTitleBar({
+	title: '',//标题
+	visible: ''//true:显示导航栏，false:隐藏导航栏
+}')
+```
+#### 获取当前登录用户信息
+
+```js
+jsBridge.getUserInfo().then(res => {
+  // 获取成功后执行的回调函数
+}).catch(err => {
+  // 获取失败（用户未登录等错误）后执行的回调函数
+})
+```
 ## 附录1
 
 ### 签名算法
@@ -204,6 +229,7 @@ jsBridge.closeWindow()
 即signature=sha1(string1)。 示例：
 
 ``` js
+appid=xxx
 noncestr=xxx
 timestamp=1414587457
 url=https://www.baidu.com?params=value
@@ -212,7 +238,7 @@ url=https://www.baidu.com?params=value
 步骤1. 对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&key2=value2…）拼接成字符串string1：
 
 ``` js
-noncestr=xxx&timestamp=1414587457&url=https://www.baidu.com?params=value
+appid=xxx&noncestr=xxx&timestamp=1414587457&url=https://www.baidu.com?params=value
 ```
 
 步骤2. 对string1进行sha1签名，得到signature：

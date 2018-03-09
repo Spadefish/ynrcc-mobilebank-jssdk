@@ -16,16 +16,27 @@ import VConsole from 'vconsole/dist/vconsole.min'
 // }
 /* eslint-disable */
 console.log(`针对es模块系统构建的版本*ynrcc-mobilebank-jssdk.mjs*使用方式: ${JSBridge} \n`)
-const jsBridge = JSBridge.config({
+
+let jsBridge = null
+JSBridge.config({
   global: window,
   debug: true,
+  appId: '123456',
+  timestamp: '98765412352',
+  nonceStr: '666666',
+  signature: '234b913e4b9780adebff19a82e65eb6800809c16',
+  url: 'https://www.baidu.com?params=value',
   errorHandler(err){
     alert(JSON.stringify(err))
   }
+}).then((bridge) => {
+  jsBridge = bridge
+  Vue.prototype.jsBridge = jsBridge
+}).catch(err => {
+  alert(JSON.stringify(err))
 })
 Vue.use(new VConsole())
 Vue.prototype.jsBridge = jsBridge
-// window.jsBridge = jsBridge
 console.log(`配置得到jsBridge: ${jsBridge}`, jsBridge)
 new Vue({
   el: '#app',

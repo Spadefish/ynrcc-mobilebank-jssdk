@@ -5,7 +5,6 @@ import istanbul from 'rollup-plugin-istanbul';
 
 let pkg = require('./package.json');
 let external = Object.keys(pkg.dependencies);
-/* eslint-disable no-console */
 // console.log('process.env.NODE_ENV === production', process.env.BUILD)
 let plugins = [
   babel(babelrc()),
