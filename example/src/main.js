@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 // 针对es模块系统构建的版本*ynrcc-mobilebank-jssdk.mjs*使用方式
 import {JSBridge} from 'JSBridge'
-import VConsole from 'vconsole/dist/vconsole.min'
+// import VConsole from 'vconsole/dist/vconsole.min'
 // 模拟客户端向浏览器中注入ViewPlus对象
 // window.ViewPlus = {
 //   event(command){

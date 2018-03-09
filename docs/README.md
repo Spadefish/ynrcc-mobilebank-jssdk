@@ -139,7 +139,7 @@
     返回的JSON数据包如下：
 
     ```js
-	{ReturnCode: '000000', ReturnMessage: 'success', xxx: 'xxx'...}
+	{ReturnCode: '000000', ReturnMessage: 'success', OtherField: 'OtherField Content', ...}
     ```
 
     <table>
@@ -162,7 +162,7 @@
     返回的JSON数据包如下：
 
     ```js
-    {ReturnCode: '444444', ReturnMessage: 'xxx', xxx: 'xxx'...}
+    {ReturnCode: 'err_code', ReturnMessage: '错误消息', OtherField: 'OtherField Content', ...}
     ```
 
     <table>
@@ -171,7 +171,7 @@
         <th>描述</th>
       </tr>
         <tr>
-            <td>RetrunCode</td>
+            <td>ReturnCode</td>
             <td>状态码，标识错误的标记，方便查错</td>
         </tr>
         <tr>
@@ -209,7 +209,7 @@ jsBridge.closeWindow()
 jsBridge.setTitleBar({
 	title: '',//标题
 	visible: ''//true:显示导航栏，false:隐藏导航栏
-}')
+})
 ```
 #### 获取当前登录用户信息
 
