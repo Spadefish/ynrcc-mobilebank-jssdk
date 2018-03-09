@@ -39,16 +39,32 @@ describe('连通性测试', () => {
         },
         stringify() {}
       }
-      jsBridge = JSBridge.config({global: {
-        YnrccJSBridge: {
-          event: function (){
-            return null
+      JSBridge.config({
+        global: {
+          YnrccJSBridge: {
+            event: function () {
+              return null
+            }
           }
+        },
+        debug: true,
+        appId: '123456',
+        timestamp: '98765412352',
+        nonceStr: '666666',
+        signature: '234b913e4b9780adebff19a82e65eb6800809c16',
+        url: 'https://www.baidu.com?params=value',
+        errorHandler(err){
+          console.log(JSON.stringify(err))
         }
-      }, debug: true})
+      }).then((bridge) => {
+        jsBridge = bridge
+      }).catch(err => {
+        console.log(JSON.stringify(err))
+      })
     })
 
     it('测试正常情况', () => {
+      console.log(jsBridge)
       jsBridge.closeWindow().then((res)=>{
         console.log('1111', res);
         expect(res['ReturnCode']).to.be.equal('000000')
@@ -70,13 +86,28 @@ describe('连通性测试', () => {
         },
         stringify() {}
       }
-      jsBridge = JSBridge.config({global: {
-        YnrccJSBridge: {
-          event: function (){
-            return null
+      JSBridge.config({
+        global: {
+          YnrccJSBridge: {
+            event: function () {
+              return null
+            }
           }
+        },
+        debug: true,
+        appId: '123456',
+        timestamp: '98765412352',
+        nonceStr: '666666',
+        signature: '234b913e4b9780adebff19a82e65eb6800809c16',
+        url: 'https://www.baidu.com?params=value',
+        errorHandler(err){
+          console.log(JSON.stringify(err))
         }
-      }, debug: true})
+      }).then((bridge) => {
+        jsBridge = bridge
+      }).catch(err => {
+        console.log(JSON.stringify(err))
+      })
     })
 
     it('测试业务返回非000000情况', () => {
@@ -98,13 +129,28 @@ describe('连通性测试', () => {
         },
         stringify() {}
       }
-      jsBridge = JSBridge.config({global: {
-        YnrccJSBridge: {
-          event: function (){
-            return null
+      JSBridge.config({
+        global: {
+          YnrccJSBridge: {
+            event: function () {
+              return null
+            }
           }
+        },
+        debug: true,
+        appId: '123456',
+        timestamp: '98765412352',
+        nonceStr: '666666',
+        signature: '234b913e4b9780adebff19a82e65eb6800809c16',
+        url: 'https://www.baidu.com?params=value',
+        errorHandler(err){
+          console.log(JSON.stringify(err))
         }
-      }, debug: true})
+      }).then((bridge) => {
+        jsBridge = bridge
+      }).catch(err => {
+        console.log(JSON.stringify(err))
+      })
     })
 
     it('模拟客户端返回json字符串格式有误的情况', () => {
