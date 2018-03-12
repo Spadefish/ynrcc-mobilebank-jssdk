@@ -208,7 +208,7 @@ jsBridge.closeWindow()
 ```js
 jsBridge.setTitleBar({
 	title: '',//标题
-	visible: ''//true:显示导航栏，false:隐藏导航栏
+	visible: true//true:显示导航栏，false:隐藏导航栏
 })
 ```
 #### 获取当前登录用户信息
