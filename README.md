@@ -185,7 +185,7 @@
 #### 分享到微信（朋友圈或者好友），支持自定义分享内容接口
 
 ```js
-jsBridge.shareToWeChart({
+jsBridge.shareToWeChat({
     title: '', // 分享标题
     link: '', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
     description: '', //分享描述
