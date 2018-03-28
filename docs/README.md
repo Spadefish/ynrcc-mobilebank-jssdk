@@ -182,21 +182,6 @@
 
 ## 接口列表
 
-#### 分享到微信（朋友圈或者好友），支持自定义分享内容接口
-
-```js
-jsBridge.shareToWeChat({
-    title: '', // 分享标题
-    link: '', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-    description: '', //分享描述
-    imgUrl: '', // 分享图标
-}).then(res => {
-  // 用户确认分享后执行的回调函数
-}).catch(err => {
-  // 用户取消分享后执行的回调函数
-})
-```
-
 #### 关闭当前网页窗口接口
 
 ```js
@@ -224,7 +209,7 @@ jsBridge.getUserInfo().then(res => {
 
 ### 签名算法
 
-签名生成规则如下：参与签名的字段包括noncestr（随机字符串）, timestamp（时间戳）, url（当前网页的URL，不包含#及其后面部分） 。对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&key2=value2…）拼接成字符串string1。这里需要注意的是所有参数名均为小写字符。对string1作sha1加密，字段名和字段值都采用原始值，不进行URL 转义。
+签名生成规则如下：参与签名的字段包括appid（应用id），noncestr（随机字符串），timestamp（时间戳）， url（当前网页的URL，不包含#及其后面部分），token(唯一标识) 。对除token以外的签名参数按照字段名的ASCII码从小到大排序（字典序）后，加上token参数，再使用URL键值对的格式（即key1=value1&key2=value2…）拼接成字符串string1。这里需要注意的是所有参数名均为小写字符。对string1作sha1加密，字段名和字段值都采用原始值，不进行URL 转义。
 
 即signature=sha1(string1)。 示例：
 
@@ -233,12 +218,13 @@ appid=xxx
 noncestr=xxx
 timestamp=1414587457
 url=https://www.baidu.com?params=value
+token=xxx
 ```
 
-步骤1. 对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&key2=value2…）拼接成字符串string1：
+步骤1. 对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后，加上token参数，使用URL键值对的格式（即key1=value1&key2=value2…）拼接成字符串string1：
 
 ``` js
-appid=xxx&noncestr=xxx&timestamp=1414587457&url=https://www.baidu.com?params=value
+appid=xxx&noncestr=xxx&timestamp=1414587457&url=https://www.baidu.com?params=value&token=xxx
 ```
 
 步骤2. 对string1进行sha1签名，得到signature：
@@ -249,11 +235,13 @@ xxxde62fce790f9a083d5c99e95740ceb90c27ed
 
 注意事项
 
-1.签名用的noncestr和timestamp必须与ynrcc.JSBridge.config中的nonceStr和timestamp相同。
+1.签名用的appid（应用id）,token（唯一标识）由云南省农村信用合作社统一分配。
 
-2.签名用的url必须是调用JS接口页面的完整URL。
+2.签名用的noncestr和timestamp必须与ynrcc.JSBridge.config中的nonceStr和timestamp相同。
 
-3.出于安全考虑，开发者必须在服务器端实现签名的逻辑。
+3.签名用的url必须是调用JS接口页面的完整URL。
+
+4.出于安全考虑，开发者必须在服务器端实现签名的逻辑。
 
 ## 测试
 
