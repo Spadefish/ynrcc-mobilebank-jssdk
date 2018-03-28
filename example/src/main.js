@@ -3,7 +3,7 @@ import App from './App.vue'
 // 针对es模块系统构建的版本*ynrcc-mobilebank-jssdk.mjs*使用方式
 import {JSBridge} from 'JSBridge'
 // 模拟客户端向浏览器中注入ViewPlus对象
-// window.ViewPlus = {
+// window.YnrccJSBridge = {
 //   event(command){
 //     /* eslint-disable no-console */
 //     console.log(`模拟客户端注入对象被调用：`, command)
@@ -25,17 +25,18 @@ JSBridge.config({
   nonceStr: '666666',
   signature: '234b913e4b9780adebff19a82e65eb6800809c16',
   url: 'https://www.baidu.com?params=value',
-  errorHandler(err){
-    alert(JSON.stringify(err))
+  errorHandler(err) {
+    console.error(`errorHandler ${JSON.stringify(err)} ${err.message}`)
+    alert('errorHandler ' + err.message)
   }
 }).then((bridge) => {
   jsBridge = bridge
   Vue.prototype.jsBridge = jsBridge
+  console.log(`配置得到jsBridge: ${JSON.stringify(jsBridge)}`, jsBridge)
 }).catch(err => {
-  alert(JSON.stringify(err))
+  alert('config err' + err.message)
 })
-Vue.prototype.jsBridge = jsBridge
-console.log(`配置得到jsBridge: ${jsBridge}`, jsBridge)
+
 new Vue({
   el: '#app',
   render: h => h(App),
