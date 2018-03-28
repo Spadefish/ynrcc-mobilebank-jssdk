@@ -127,11 +127,11 @@
   - 所有接口通过JSBridge.config配置之后返回的对象来调用，参数是一个对象，除了每个接口本身返回的是一个`Promise`对象，通过`then`处理调用成功的情况，通过`catch`处理调用失败的情况，而且是业务层面的【成功】或者【失败】类似：
 
     ```js
-      jsBridge.xxx().then(res => {
-        // 处理调用成功的情况
-      }).catch(err => {
-        // 处理调用失败的情况
-      })
+     jsBridge.getUserInfo().then(res => {
+       // 获取成功后执行的回调函数
+     }).catch(err => {
+       // 获取失败（用户未登录等错误）后执行的回调函数
+     })
   ```
 
   - `then`中返回的通用参数列表：(待补充)
@@ -235,7 +235,7 @@ xxxde62fce790f9a083d5c99e95740ceb90c27ed
 
 注意事项
 
-1.签名用的appid（应用id）,token（唯一标识）由云南省农村信用合作社统一分配。
+1.签名用的appid（应用id），token（唯一标识）由云南省农村信用合作社统一分配。
 
 2.签名用的noncestr和timestamp必须与ynrcc.JSBridge.config中的nonceStr和timestamp相同。
 

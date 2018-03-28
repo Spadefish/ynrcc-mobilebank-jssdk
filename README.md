@@ -235,7 +235,7 @@ xxxde62fce790f9a083d5c99e95740ceb90c27ed
 
 注意事项
 
-1.签名用的appid（应用id）,token（唯一标识）由云南省农村信用合作社统一分配。
+1.签名用的appid（应用id），token（唯一标识）由云南省农村信用合作社统一分配。
 
 2.签名用的noncestr和timestamp必须与ynrcc.JSBridge.config中的nonceStr和timestamp相同。
 
