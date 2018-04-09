@@ -201,6 +201,7 @@ jsBridge.setTitleBar({
 ```js
 jsBridge.getUserInfo().then(res => {
   // 获取成功后执行的回调函数
+  // 数据详见附录2
 }).catch(err => {
   // 获取失败（用户未登录等错误）后执行的回调函数
 })
@@ -242,6 +243,36 @@ xxxde62fce790f9a083d5c99e95740ceb90c27ed
 3.签名用的url必须是调用JS接口页面的完整URL。
 
 4.出于安全考虑，开发者必须在服务器端实现签名的逻辑。
+
+## 附录2
+
+### 用户信息
+  <table>
+    <tr>
+      <th>参数</th>
+      <th>描述</th>
+    </tr>
+    <tr>
+      <td>CifNo</td>
+      <td>客户号，用户唯一标识</td>
+    </tr>
+    <tr>
+      <td>CifName</td>
+      <td>姓名</td>
+    </tr>
+    <tr>
+      <td>UserIdNo</td>
+      <td>身份证号码</td>
+    </tr>
+    <tr>
+      <td>MobilePhoneEncrypt</td>
+      <td>手机号</td>
+    </tr>
+    <tr>
+      <td>BranchSeq</td>
+      <td>开户机构码</td>
+    </tr>
+  </table>
 
 ## 测试
 

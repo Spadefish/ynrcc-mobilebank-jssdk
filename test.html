@@ -52,6 +52,20 @@
           alert(JSON.stringify(err))
         })
       }
+      function test() {
+        document.activeElement.blur();
+        jsBridge.showPwdKeyboard(document.getElementById("pwd"), "password");
+      }
+      function getPwd() {
+        jsBridge.getEncrypt(['password'], '1522908333665').then(res => {
+          alert(JSON.stringify(res))
+        }).catch(error => {
+          alert('showPwdKeyboard err ' + error.message)
+        })
+      }
+      function clearPwd() {
+        jsBridge.onTapClearKeyboardEncrypt(document.getElementById("pwd"), "password")
+      }
     </script>
    <style>
      body {
@@ -67,5 +81,9 @@
   <a onclick="back()">返回手机银行</a><br><br>
   <a onclick="share()">微信分享</a><br><br>
   <a onclick="getUserInfo()">获取用户信息</a><br><br>
+  <a onclick="getPwd()">获取密文</a><br><br>
+  <a onclick="clearPwd()">清除密文</a><br><br>
+  <br/><br/><br/><br/>
+  <input id="pwd" onfocus="test()">
 </body>
 </html>
