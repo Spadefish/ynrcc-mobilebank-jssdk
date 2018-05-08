@@ -205,6 +205,85 @@ jsBridge.getUserInfo().then(res => {
   // 获取失败（用户未登录等错误）后执行的回调函数
 })
 ```
+#### 监听手机银行用户登录状态
+
+```js
+jsBridge.doOAuthAndListenerSignIn(params).then(res => {
+  // 获取成功后执行的回调函数
+}).catch(err => {
+  // 获取失败后执行的回调函数
+})
+  ```
+
+ - `params`请求的参数列表：
+
+    JSON数据包如下：
+
+    ```js
+	{needSignIn: false}
+    ```
+
+    <table>
+      <tr>
+        <th>参数</th>
+        <th>描述</th>
+      </tr>
+        <tr>
+            <td>needSignIn</td>
+            <td>是否拉起登录：true-是；false-否(默认 false)</td>
+        </tr>
+    </table>
+
+ - `then`中返回的通用参数列表：
+
+    返回的JSON数据包如下：
+
+    ```js
+	{ReturnCode: '000000', ReturnMessage: 'success', SignInState: true}
+    ```
+
+    <table>
+      <tr>
+        <th>参数</th>
+        <th>描述</th>
+      </tr>
+        <tr>
+            <td>ReturnCode</td>
+            <td>000000</td>
+        </tr>
+         <tr>
+            <td>ReturnMessage</td>
+            <td>接口返回的成功消息</td>
+        </tr>
+        <tr>
+            <td>SignInState</td>
+            <td>用户登录状态：true-已登录；false-未登录</td>
+        </tr>
+    </table>
+
+ - `catch`中一般为调用接口出现错误，返回的通用参数列表：(待补充)
+
+    返回的JSON数据包如下：
+
+    ```js
+    {ReturnCode: 'err_code', ReturnMessage: '错误消息', OtherField: 'OtherField Content', ...}
+    ```
+
+    <table>
+      <tr>
+        <th>参数</th>
+        <th>描述</th>
+      </tr>
+        <tr>
+            <td>ReturnCode</td>
+            <td>状态码，标识错误的标记，方便查错</td>
+        </tr>
+        <tr>
+            <td>ReturnMessage</td>
+            <td>接口返回的错误信息</td>
+        </tr>
+    </table>
+
 ## 附录1
 
 ### 签名算法
