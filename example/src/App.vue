@@ -12,6 +12,12 @@
     <ul>
       <li><a @click="getUserInfo">获取登录用户信息</a></li>
     </ul>
+    <ul>
+      <li><a @click="oAuthSignIn(true)">监听手机银行用户登录状态-拉起登录(是needSignIn=true)</a></li>
+    </ul>
+    <ul>
+      <li><a @click="oAuthSignIn(false)">监听手机银行用户登录状态-拉起登录(否needSignIn=false)</a></li>
+    </ul>
     <h4>分享</h4>
     <ul>
       <li><a @click="shareToWeChat">微信分享</a></li>
@@ -65,6 +71,13 @@
           alert(JSON.stringify(res))
         }).catch(error => {
           alert('getUserInfo err ' + error.message)
+        })
+      },
+      oAuthSignIn(needSignIn) {
+        this.jsBridge.oAuthSignIn({needSignIn: needSignIn}).then(res => {
+          alert('loginState success=>' + JSON.stringify(res))
+        }).catch(error => {
+          alert('loginState err=> ' + error.message)
         })
       }
     },

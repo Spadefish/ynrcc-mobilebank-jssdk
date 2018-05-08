@@ -127,11 +127,11 @@
   - 所有接口通过JSBridge.config配置之后返回的对象来调用，参数是一个对象，除了每个接口本身返回的是一个`Promise`对象，通过`then`处理调用成功的情况，通过`catch`处理调用失败的情况，而且是业务层面的【成功】或者【失败】类似：
 
     ```js
-      jsBridge.xxx().then(res => {
-        // 处理调用成功的情况
-      }).catch(err => {
-        // 处理调用失败的情况
-      })
+     jsBridge.getUserInfo().then(res => {
+       // 获取成功后执行的回调函数
+     }).catch(err => {
+       // 获取失败（用户未登录等错误）后执行的回调函数
+     })
   ```
 
   - `then`中返回的通用参数列表：(待补充)
@@ -182,21 +182,6 @@
 
 ## 接口列表
 
-#### 分享到微信（朋友圈或者好友），支持自定义分享内容接口
-
-```js
-jsBridge.shareToWeChat({
-    title: '', // 分享标题
-    link: '', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-    description: '', //分享描述
-    imgUrl: '', // 分享图标
-}).then(res => {
-  // 用户确认分享后执行的回调函数
-}).catch(err => {
-  // 用户取消分享后执行的回调函数
-})
-```
-
 #### 关闭当前网页窗口接口
 
 ```js
@@ -211,6 +196,7 @@ jsBridge.setTitleBar({
 	visible: true//true:显示导航栏，false:隐藏导航栏
 })
 ```
+
 #### 获取当前登录用户信息
 
 ```js
@@ -220,11 +206,65 @@ jsBridge.getUserInfo().then(res => {
   // 获取失败（用户未登录等错误）后执行的回调函数
 })
 ```
+
+#### 授权登录
+
+```js
+jsBridge.oAuthSignIn({needSignIn = false} = {}).then(res => {
+  // 授权成功
+}).catch(err => {
+  // 授权失败
+})
+```
+
+参数：
+
+    <table>
+      <tr>
+        <th>参数</th>
+        <th>描述</th>
+      </tr>
+        <tr>
+            <td>needSignIn</td>
+            <td>是否需要登录，需要传递true，否则为false</td>
+        </tr>
+    </table>
+
+
+附加返回数据：
+
+    <table>
+      <tr>
+        <th>参数</th>
+        <th>描述</th>
+      </tr>
+        <tr>
+            <td>SignInState</td>
+            <td>当前手机银行的登录状态</td>
+        </tr>
+    </table>
+
+
+交互流程:
+
+![](https://ws4.sinaimg.cn/large/006tKfTcgy1fr3zy33s0qj30tx0ocwf0.jpg)
+
+(流程1：用户先登录手机银行)
+
+![](https://ws1.sinaimg.cn/large/006tKfTcgy1fr3zyxhjdyj30tx0nwq3n.jpg)
+
+(流程2：用户未登录手机银行)
+
+**特别注意：**
+  + 参数中的`needSignIn`，如果用户已经在客户端已经登录成功，就算这个参数传递的是`true`，我们也不会拉起登录页面，而是直接同步返回登录状态
+  + 指令中的`listener`，必须为`window`对象下的全局函数，会在拉起登录完毕之后，通过其通知登录状态，此过程是**异步的**
+
+
 ## 附录1
 
 ### 签名算法
 
-签名生成规则如下：参与签名的字段包括noncestr（随机字符串）, timestamp（时间戳）, url（当前网页的URL，不包含#及其后面部分） 。对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&key2=value2…）拼接成字符串string1。这里需要注意的是所有参数名均为小写字符。对string1作sha1加密，字段名和字段值都采用原始值，不进行URL 转义。
+签名生成规则如下：参与签名的字段包括appid（应用id），noncestr（随机字符串），timestamp（时间戳）， url（当前网页的URL，不包含#及其后面部分），token(唯一标识) 。对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&key2=value2…）拼接成字符串string1。这里需要注意的是所有参数名均为小写字符。对string1作sha1加密，字段名和字段值都采用原始值，不进行URL 转义。
 
 即signature=sha1(string1)。 示例：
 
@@ -233,12 +273,13 @@ appid=xxx
 noncestr=xxx
 timestamp=1414587457
 url=https://www.baidu.com?params=value
+token=xxx
 ```
 
 步骤1. 对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&key2=value2…）拼接成字符串string1：
 
 ``` js
-appid=xxx&noncestr=xxx&timestamp=1414587457&url=https://www.baidu.com?params=value
+appid=xxx&noncestr=xxx&timestamp=1414587457&url=https://www.baidu.com?params=value&token=xxx
 ```
 
 步骤2. 对string1进行sha1签名，得到signature：
@@ -249,11 +290,13 @@ xxxde62fce790f9a083d5c99e95740ceb90c27ed
 
 注意事项
 
-1.签名用的noncestr和timestamp必须与ynrcc.JSBridge.config中的nonceStr和timestamp相同。
+1.签名用的appid（应用id），token（唯一标识）由云南省农村信用合作社统一分配。
 
-2.签名用的url必须是调用JS接口页面的完整URL。
+2.签名用的noncestr和timestamp必须与ynrcc.JSBridge.config中的nonceStr和timestamp相同。
 
-3.出于安全考虑，开发者必须在服务器端实现签名的逻辑。
+3.签名用的url必须是调用JS接口页面的完整URL。
+
+4.出于安全考虑，开发者必须在服务器端实现签名的逻辑。
 
 ## 测试
 
