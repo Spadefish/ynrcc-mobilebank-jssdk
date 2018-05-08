@@ -1,6 +1,6 @@
 {
   "name": "ynrcc-mobilebank-jssdk",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "本JS-SDK是面向云南农信手机银行客户端网页开发者提供的网页开发工具包。",
   "main": "dist/ynrcc-mobilebank-jssdk.js",
   "module": "dist/ynrcc-mobilebank-jssdk.mjs",
