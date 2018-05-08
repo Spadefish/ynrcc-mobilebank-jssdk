@@ -219,30 +219,30 @@ jsBridge.oAuthSignIn({needSignIn = false} = {}).then(res => {
 
 参数：
 
-    <table>
-      <tr>
-        <th>参数</th>
-        <th>描述</th>
-      </tr>
-        <tr>
-            <td>needSignIn</td>
-            <td>是否需要登录，需要传递true，否则为false</td>
-        </tr>
-    </table>
+<table>
+  <tr>
+    <th>参数</th>
+    <th>描述</th>
+  </tr>
+    <tr>
+        <td>needSignIn</td>
+        <td>是否需要登录，需要传递true，否则为false</td>
+    </tr>
+</table>
 
 
 附加返回数据：
 
-    <table>
-      <tr>
-        <th>参数</th>
-        <th>描述</th>
-      </tr>
-        <tr>
-            <td>SignInState</td>
-            <td>当前手机银行的登录状态</td>
-        </tr>
-    </table>
+<table>
+  <tr>
+    <th>参数</th>
+    <th>描述</th>
+  </tr>
+    <tr>
+        <td>SignInState</td>
+        <td>当前手机银行的登录状态</td>
+    </tr>
+</table>
 
 
 交互流程:
