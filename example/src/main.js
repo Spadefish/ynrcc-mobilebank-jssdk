@@ -16,11 +16,12 @@ import * as SHA from './assets/js/SHA1'
 // }
 /* eslint-disable */
 console.log(`针对es模块系统构建的版本*ynrcc-mobilebank-jssdk.mjs*使用方式: ${JSBridge} \n`)
+const timestamp = new Date().getTime().toString()
 const obj = {
-  appid: '123456',
-  timestamp: '98765412352',
+  appid: 'b0559771ff2e4813adaa4e649ca9bbb8',
+  timestamp: timestamp,
   noncestr: '666666',
-  token: '5452652',
+  token: '167adb84463926289d1d6a2a960be8de',
   url: ''
 }
 const signature = SHA.SHA1(SHA.orgSHA1SignSrc(SHA.objToArrayAndSortByASCII(obj), obj))
@@ -30,8 +31,8 @@ let jsBridge = null
 JSBridge.config({
   global: window,
   debug: true,
-  appId: '123456',
-  timestamp: '98765412352',
+  appId: 'b0559771ff2e4813adaa4e649ca9bbb8',
+  timestamp: timestamp,
   nonceStr: '666666',
   signature: signature,
   url: '',
