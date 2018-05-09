@@ -182,19 +182,10 @@
 
 ## 接口列表
 
-#### 关闭当前网页窗口接口
+#### 关闭当前网页窗口
 
 ```js
 jsBridge.closeWindow()
-```
-
-#### 原生导航栏设置
-
-```js
-jsBridge.setTitleBar({
-	title: '',//标题
-	visible: true//true:显示导航栏，false:隐藏导航栏
-})
 ```
 
 #### 获取当前登录用户信息
@@ -301,10 +292,15 @@ xxxde62fce790f9a083d5c99e95740ceb90c27ed
 ## 附录2
 
 ### 用户信息
+  获取用户信息接口返回数据如下，默认只返回前4条数据，如需全部数据请联系云南农信相关人员进行配置。
   <table>
     <tr>
       <th>参数</th>
       <th>描述</th>
+    </tr>
+    <tr>
+      <td>UserId</td>
+      <td>用户登录名</td>
     </tr>
     <tr>
       <td>CifNo</td>
@@ -315,16 +311,20 @@ xxxde62fce790f9a083d5c99e95740ceb90c27ed
       <td>姓名</td>
     </tr>
     <tr>
+      <td>BranchSeq</td>
+      <td>开户机构码</td>
+    </tr>
+    <tr>
+      <td>UserIdType</td>
+      <td>证件类型(52:身份证，70:护照)</td>
+    </tr>
+    <tr>
       <td>UserIdNo</td>
-      <td>身份证号码</td>
+      <td>证件号码</td>
     </tr>
     <tr>
       <td>MobilePhoneEncrypt</td>
       <td>手机号</td>
-    </tr>
-    <tr>
-      <td>BranchSeq</td>
-      <td>开户机构码</td>
     </tr>
   </table>
 
