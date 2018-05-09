@@ -12,18 +12,16 @@
     <ul>
       <li><a @click="getUserInfo">获取登录用户信息</a></li>
     </ul>
+    <ul>
+      <li><a @click="oAuthSignIn(true)">监听手机银行用户登录状态-拉起登录(是needSignIn=true)</a></li>
+    </ul>
+    <ul>
+      <li><a @click="oAuthSignIn(false)">监听手机银行用户登录状态-拉起登录(否needSignIn=false)</a></li>
+    </ul>
     <h4>分享</h4>
     <ul>
       <li><a @click="shareToWeChat">微信分享</a></li>
     </ul>
-    <h4>密码相关</h4>
-    <ul>
-      <li><a @click="pullKeyboard">拉起密码键盘</a></li>
-      <li><a @click="getPwdEncrypt">获取密文</a></li>
-      <li><a @click="clearPwd">清除密码</a></li>
-      <li><a @click="getMobileDevice">获取设备信息</a></li>
-    </ul>
-    <input id="pwd">
   </div>
 </template>
 
@@ -75,27 +73,11 @@
           alert('getUserInfo err ' + error.message)
         })
       },
-      pullKeyboard() {
-        this.jsBridge.showPwdKeyboard(document.getElementById("pwd"), "password").then(res => {
-          alert(JSON.stringify(res))
+      oAuthSignIn(needSignIn) {
+        this.jsBridge.oAuthSignIn({needSignIn: needSignIn}).then(res => {
+          alert('loginState success=>' + JSON.stringify(res))
         }).catch(error => {
-          alert('showPwdKeyboard err ' + error.message)
-        })
-      },
-      getPwdEncrypt() {
-        this.jsBridge.getEncrypt(['password'], '1522908333665').then(res => {
-          alert(JSON.stringify(res))
-        }).catch(error => {
-          alert('showPwdKeyboard err ' + error.message)
-        })
-      },
-      clearPwd() {
-        this.jsBridge.onTapClearKeyboardEncrypt(document.getElementById("pwd"), "password")
-      },
-      getMobileDevice() {
-        this.jsBridge.getMobileDeviceInfo().then(res => {
-          alert(JSON.stringify(res))
-        }).catch(err => {
+          alert('loginState err=> ' + error.message)
         })
       }
     },

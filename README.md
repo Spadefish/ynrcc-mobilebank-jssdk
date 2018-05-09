@@ -196,6 +196,7 @@ jsBridge.setTitleBar({
 	visible: true//true:显示导航栏，false:隐藏导航栏
 })
 ```
+
 #### 获取当前登录用户信息
 
 ```js
@@ -206,6 +207,60 @@ jsBridge.getUserInfo().then(res => {
   // 获取失败（用户未登录等错误）后执行的回调函数
 })
 ```
+
+#### 授权登录
+
+```js
+jsBridge.oAuthSignIn({needSignIn = false} = {}).then(res => {
+  // 授权成功
+}).catch(err => {
+  // 授权失败
+})
+```
+
+参数：
+
+<table>
+  <tr>
+    <th>参数</th>
+    <th>描述</th>
+  </tr>
+    <tr>
+        <td>needSignIn</td>
+        <td>是否需要登录，需要传递true，否则为false</td>
+    </tr>
+</table>
+
+
+附加返回数据：
+
+<table>
+  <tr>
+    <th>参数</th>
+    <th>描述</th>
+  </tr>
+    <tr>
+        <td>SignInState</td>
+        <td>当前手机银行的登录状态</td>
+    </tr>
+</table>
+
+
+交互流程:
+
+![](https://ws4.sinaimg.cn/large/006tKfTcgy1fr3zy33s0qj30tx0ocwf0.jpg)
+
+(流程1：用户先登录手机银行)
+
+![](https://ws1.sinaimg.cn/large/006tKfTcgy1fr3zyxhjdyj30tx0nwq3n.jpg)
+
+(流程2：用户未登录手机银行)
+
+**特别注意：**
+  + 参数中的`needSignIn`，如果用户已经在客户端已经登录成功，就算这个参数传递的是`true`，我们也不会拉起登录页面，而是直接同步返回登录状态
+  + 指令中的`listener`，必须为`window`对象下的全局函数，会在拉起登录完毕之后，通过其通知登录状态，此过程是**异步的**
+
+
 ## 附录1
 
 ### 签名算法
