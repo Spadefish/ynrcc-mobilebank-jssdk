@@ -72,6 +72,13 @@
       function clearPwd() {
         jsBridge.onTapClearKeyboardEncrypt(document.getElementById("pwd"), "password")
       }
+      function doOAuthAndListenerSignIn(needSignIn) {
+        jsBridge.oAuthSignIn({needSignIn: needSignIn}).then(res => {
+          alert('loginState success=>' + JSON.stringify(res))
+        }).catch(error => {
+          alert('loginState err=> ' + error.message)
+        })
+      }
     </script>
    <style>
      body {
@@ -87,9 +94,7 @@
   <a onclick="back()">返回手机银行</a><br><br>
   <a onclick="share()">微信分享</a><br><br>
   <a onclick="getUserInfo()">获取用户信息</a><br><br>
-  <a onclick="getPwd()">获取密文</a><br><br>
-  <a onclick="clearPwd()">清除密文</a><br><br>
-  <br/><br/><br/><br/>
-  <input id="pwd" onfocus="test()">
+  <a onclick="doOAuthAndListenerSignIn(true)">监听手机银行用户登录状态-拉起登录(是needSignIn=true)</a><br><br>
+  <a onclick="doOAuthAndListenerSignIn(false)">监听手机银行用户登录状态-拉起登录(否needSignIn=false)</a><br><br>
 </body>
 </html>
