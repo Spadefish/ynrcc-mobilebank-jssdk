@@ -22,12 +22,18 @@
         signature: '234b913e4b9780adebff19a82e65eb6800809c16',
         url: 'https://www.baidu.com?params=value',
         errorHandler(err){
-          alert(JSON.stringify(err))
+          if(err.message.indexOf('没有配置上下文') !== -1 || err.message.indexOf('不支持当前运行环境') !== -1) {
+            alert('请更新云南农信手机银行再行使用！')
+          } else {
+            alert(JSON.stringify(err))
+          }
+          console.log(err)
         }
       }).then((bridge) => {
         jsBridge = bridge
       }).catch(err => {
-        alert(JSON.stringify(err))
+        console.log(err)
+//        alert(JSON.stringify(err))
       })
       console.log('直接注入针对浏览器构建的版本*ynrcc-mobilebank-jssdk.js*使用方式', ynrcc.JSBridge)
       console.log(jsBridge)

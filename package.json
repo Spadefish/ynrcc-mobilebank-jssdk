@@ -40,6 +40,7 @@
   ],
   "homepage": "https://jiiiiiin.github.io/ynrcc-mobilebank-jssdk/#/",
   "dependencies": {
+    "base64url": "^2.0.0",
     "es6-promise": "^4.2.4"
   },
   "devDependencies": {

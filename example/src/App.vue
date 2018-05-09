@@ -70,7 +70,7 @@
         this.jsBridge.getUserInfo().then(res => {
           alert(JSON.stringify(res))
         }).catch(error => {
-          alert('getUserInfo err ' + error.message)
+          alert('getUserInfo err ' + JSON.stringify(error))
         })
       },
       oAuthSignIn(needSignIn) {

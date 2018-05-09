@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 // 针对es模块系统构建的版本*ynrcc-mobilebank-jssdk.mjs*使用方式
 import {JSBridge} from 'JSBridge'
+import * as SHA from './assets/js/SHA1'
 // 模拟客户端向浏览器中注入ViewPlus对象
 // window.YnrccJSBridge = {
 //   event(command){
@@ -15,7 +16,16 @@ import {JSBridge} from 'JSBridge'
 // }
 /* eslint-disable */
 console.log(`针对es模块系统构建的版本*ynrcc-mobilebank-jssdk.mjs*使用方式: ${JSBridge} \n`)
-
+const obj = {
+  appid: '123456',
+  timestamp: '98765412352',
+  noncestr: '666666',
+  token: '5452652',
+  url: ''
+}
+const signature = SHA.SHA1(SHA.orgSHA1SignSrc(SHA.objToArrayAndSortByASCII(obj), obj))
+console.log(`签名：${signature}`)
+signature.indexOf()
 let jsBridge = null
 JSBridge.config({
   global: window,
@@ -23,8 +33,8 @@ JSBridge.config({
   appId: '123456',
   timestamp: '98765412352',
   nonceStr: '666666',
-  signature: '234b913e4b9780adebff19a82e65eb6800809c16',
-  url: 'https://www.baidu.com?params=value',
+  signature: signature,
+  url: '',
   errorHandler(err) {
     console.error(`errorHandler ${JSON.stringify(err)} ${err.message}`)
     alert('errorHandler ' + err.message)
