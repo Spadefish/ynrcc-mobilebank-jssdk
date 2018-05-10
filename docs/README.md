@@ -193,11 +193,47 @@ jsBridge.closeWindow()
 ```js
 jsBridge.getUserInfo().then(res => {
   // 获取成功后执行的回调函数
-  // 数据详见附录2
 }).catch(err => {
   // 获取失败（用户未登录等错误）后执行的回调函数
 })
 ```
+
+返回数据如下，默认只返回前4条数据，如需全部数据请联系云南农信相关人员进行配置。
+  <table>
+    <tr>
+      <th>参数</th>
+      <th>描述</th>
+    </tr>
+    <tr>
+      <td>UserId</td>
+      <td>用户登录名</td>
+    </tr>
+    <tr>
+      <td>CifNo</td>
+      <td>客户号，用户唯一标识</td>
+    </tr>
+    <tr>
+      <td>CifName</td>
+      <td>姓名</td>
+    </tr>
+    <tr>
+      <td>BranchSeq</td>
+      <td>开户机构码</td>
+    </tr>
+    <tr>
+      <td>UserIdType</td>
+      <td>证件类型(52:身份证，70:护照)</td>
+    </tr>
+    <tr>
+      <td>UserIdNo</td>
+      <td>证件号码</td>
+    </tr>
+    <tr>
+      <td>MobilePhoneEncrypt</td>
+      <td>手机号</td>
+    </tr>
+  </table>
+
 
 #### 授权登录
 
@@ -288,45 +324,6 @@ xxxde62fce790f9a083d5c99e95740ceb90c27ed
 3.签名用的url必须是调用JS接口页面的完整URL。
 
 4.出于安全考虑，开发者必须在服务器端实现签名的逻辑。
-
-## 附录2
-
-### 用户信息
-  获取用户信息接口返回数据如下，默认只返回前4条数据，如需全部数据请联系云南农信相关人员进行配置。
-  <table>
-    <tr>
-      <th>参数</th>
-      <th>描述</th>
-    </tr>
-    <tr>
-      <td>UserId</td>
-      <td>用户登录名</td>
-    </tr>
-    <tr>
-      <td>CifNo</td>
-      <td>客户号，用户唯一标识</td>
-    </tr>
-    <tr>
-      <td>CifName</td>
-      <td>姓名</td>
-    </tr>
-    <tr>
-      <td>BranchSeq</td>
-      <td>开户机构码</td>
-    </tr>
-    <tr>
-      <td>UserIdType</td>
-      <td>证件类型(52:身份证，70:护照)</td>
-    </tr>
-    <tr>
-      <td>UserIdNo</td>
-      <td>证件号码</td>
-    </tr>
-    <tr>
-      <td>MobilePhoneEncrypt</td>
-      <td>手机号</td>
-    </tr>
-  </table>
 
 ## 测试
 
