@@ -4,9 +4,9 @@
     <h4>导航相关</h4>
     <ul>
       <li><a @click="closeWindow">关闭网页窗口</a></li>
-      <li><a @click="setTitleBar(0)">显示导航栏</a></li>
+     <!-- <li><a @click="setTitleBar(0)">显示导航栏</a></li>
       <li><a @click="setTitleBar(1)">隐藏导航栏</a></li>
-      <li><a @click="h5loaded">通知客户端网页加载完毕</a></li>
+      <li><a @click="h5loaded">通知客户端网页加载完毕</a></li>-->
     </ul>
     <h4>用户相关</h4>
     <ul>
@@ -18,10 +18,10 @@
     <ul>
       <li><a @click="oAuthSignIn(false)">监听手机银行用户登录状态-拉起登录(否needSignIn=false)</a></li>
     </ul>
-    <h4>分享</h4>
-    <ul>
+    <!--<h4>分享</h4>-->
+   <!-- <ul>
       <li><a @click="shareToWeChat">微信分享</a></li>
-    </ul>
+    </ul>-->
   </div>
 </template>
 
@@ -70,7 +70,7 @@
         this.jsBridge.getUserInfo().then(res => {
           alert(JSON.stringify(res))
         }).catch(error => {
-          alert('getUserInfo err ' + JSON.stringify(error))
+          alert('getUserInfo err ' + error.message)
         })
       },
       oAuthSignIn(needSignIn) {

@@ -37,7 +37,7 @@ JSBridge.config({
   signature: signature,
   url: '',
   errorHandler(err) {
-    console.error(`errorHandler ${JSON.stringify(err)} ${err.message}`)
+    console.error(`errorHandler ${err.message}`)
     alert('errorHandler ' + err.message)
   }
 }).then((bridge) => {
