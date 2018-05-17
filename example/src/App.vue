@@ -77,7 +77,7 @@
         this.jsBridge.oAuthSignIn({needSignIn: needSignIn}).then(res => {
           alert('loginState success=>' + JSON.stringify(res))
         }).catch(error => {
-          alert('loginState err=> ' + error.message)
+          alert('loginState err=> ' + JSON.stringify(error))
         })
       }
     },
