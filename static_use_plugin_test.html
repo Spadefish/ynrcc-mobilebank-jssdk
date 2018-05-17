@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>123</title>
     <!--<script src="/dist/build.js"></script>-->
-    <script src="./dist/ynrcc-mobilebank-jssdk.js"></script>
+    <script src="./dist/ynrcc-mobilebank-jssdk-1.1.2.js"></script>
     <script type="text/javascript">
 //      const jsBridge = ynrcc.JSBridge.config({
 //        debug: true, // 开启调试模式,在PC端开发调试面板中会输出log，如果希望在手机端输出，这里推荐一个插件Tencent/vConsole
@@ -18,7 +18,7 @@
         debug: true,
         appId: 'b0559771ff2e4813adaa4e649ca9bbb8',
         timestamp: '98765412352',
-        nonceStr: '666666',
+        nonceStr: '6666666',
         signature: '01ab69e8cb7d0faf8fb5db3aedb82df1a4640046',
         url: '',
         errorHandler(err){
@@ -32,6 +32,7 @@
       }).then((bridge) => {
         jsBridge = bridge
       }).catch(err => {
+        alert(err)
         console.log(err)
 //        alert(JSON.stringify(err))
       })

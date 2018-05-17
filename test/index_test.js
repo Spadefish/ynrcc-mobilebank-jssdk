@@ -1,3 +1,4 @@
+/* eslint-disable */
 import 'babel-polyfill'
 /* setup.js https://github.com/airbnb/enzyme/blob/master/docs/guides/jsdom.md */
 const { JSDOM } = require('jsdom')
@@ -24,6 +25,18 @@ copyProps(window, global)
 
 import {expect} from 'chai'
 const JSBridge = require('../lib').JSBridge
+//
+// describe('done', function (){
+//   it('done test', function (done){
+//     setTimeout(function (){
+//       done()
+//     }, 1900)
+//   })
+//   it('done test1', function (){
+//     console.log('it里的输出')
+//   })
+//   console.log('it外的输出')
+// })
 
 /* eslint-disable no-console */
 describe('连通性测试', () => {
@@ -58,19 +71,25 @@ describe('连通性测试', () => {
         }
       }).then((bridge) => {
         jsBridge = bridge
-        it('测试正常情况', () => {
-          console.log(jsBridge)
-          jsBridge.closeWindow().then((res)=>{
-            console.log('1111', res);
-            expect(res['ReturnCode']).to.be.equal('000000')
-          })
-        })
+        console.log('关闭窗口')
+        jsBridge.closeWindow = () => {
+          console.log('关闭窗口')
+        }
+        resolve()
       }).catch(err => {
         console.log(JSON.stringify(err))
+        done()
       })
     })
+  it('测试正常情况', (done) => {
+    console.log(jsBridge)
+    jsBridge.closeWindow().then((res)=>{
+      console.log('1111', res);
+      expect(res['ReturnCode']).to.be.equal('000000')
+      done()
+    })
+  })
 })
-
 describe('连通性测试', () => {
 
     let jsBridge = null
@@ -104,9 +123,11 @@ describe('连通性测试', () => {
         }
       }).then((bridge) => {
         jsBridge = bridge
-        it('测试业务返回非000000情况', () => {
+        console.log(1)
+        it('测试业务返回非000000情况', (done) => {
           jsBridge.closeWindow().catch((err)=>{
             expect(err['ReturnCode']).to.be.equal('time_out')
+            done();
           })
         })
       }).catch(err => {

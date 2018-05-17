@@ -11,7 +11,6 @@ let external = Object.keys(pkg.dependencies);
 let plugins = [
   babel(babelrc()),
   (process.env.BUILD === 'production' && uglify()),
-  // uglify()
 ];
 
 if (process.env.BUILD !== 'production') {
@@ -24,9 +23,6 @@ export default {
   entry: 'lib/index.js',
   plugins: plugins,
   external: external,
-  globals: {
-    base64url: 'base64url'
-  },
   targets: [
     {
       dest: pkg.main,
