@@ -27,12 +27,11 @@
           } else {
             alert(JSON.stringify(err))
           }
-          alert(err)
+          console.log(err)
         }
       }).then((bridge) => {
         jsBridge = bridge
       }).catch(err => {
-        alert(err)
         console.log(err)
 //        alert(JSON.stringify(err))
       })
