@@ -25,8 +25,6 @@ const obj = {
   url: ''
 }
 
-alert(navigator.userAgent)
-
 // TODO 修改为npm引入
 const signature = SHA.SHA1(SHA.orgSHA1SignSrc(SHA.objToArrayAndSortByASCII(obj), obj))
 console.log(`签名：${signature}`)
