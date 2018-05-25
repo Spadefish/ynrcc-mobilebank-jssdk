@@ -80,7 +80,7 @@ describe('连通性测试', () => {
         parse() {
           return {
             ReturnCode: 'time_out',
-            ReturnMsg: '请求超时'
+            ReturnMessage: '请求超时'
           }
         },
         stringify() {}

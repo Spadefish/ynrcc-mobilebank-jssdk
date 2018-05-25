@@ -10,7 +10,7 @@ import * as SHA from './assets/js/SHA1'
 //     console.log(`模拟客户端注入对象被调用：`, command)
 //     return JSON.stringify({
 //       ReturnCode: '000000',
-//       ReturnMsg: '模拟客户端返回成功消息'
+//       ReturnMessage: '模拟客户端返回成功消息'
 //     })
 //   }
 // }
@@ -24,6 +24,9 @@ const obj = {
   token: '167adb84463926289d1d6a2a960be8de',
   url: ''
 }
+
+alert(navigator.userAgent)
+
 // TODO 修改为npm引入
 const signature = SHA.SHA1(SHA.orgSHA1SignSrc(SHA.objToArrayAndSortByASCII(obj), obj))
 console.log(`签名：${signature}`)
@@ -38,7 +41,7 @@ JSBridge.config({
   url: '',
   errorHandler(err) {
     console.error(`errorHandler ${err.message}`)
-    alert('errorHandler ' + err.message)
+    alert('errorHandler ' + err)
   }
 }).then((bridge) => {
   jsBridge = bridge
