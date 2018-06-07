@@ -318,7 +318,7 @@ token=xxx
 步骤1. 对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&key2=value2…）拼接成字符串string1：
 
 ``` js
-appid=xxx&noncestr=xxx&timestamp=1414587457&url=https://www.baidu.com?params=value&token=xxx
+appid=xxx&noncestr=xxx&timestamp=1414587457&token=xxx&url=https://www.baidu.com?params=value
 ```
 
 步骤2. 对string1进行sha1签名，得到signature：
