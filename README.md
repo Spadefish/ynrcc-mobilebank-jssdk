@@ -99,12 +99,12 @@
 		url: '',
 		jsApiList: [],
 		errorHandler(err){
-			alert(JSON.stringify(err))
+			alert(err)
 		}
 	}).then((bridge) => {
 		jsBridge = bridge
 	}).catch(err => {
-		alert(JSON.stringify(err))
+		alert(err)
 	})
 
   new Vue({
@@ -250,7 +250,7 @@ jsBridge.getUserInfo().then(res => {
 #### 授权登录
 
 ```js
-jsBridge.oAuthSignIn({needSignIn = false} = {}).then(res => {
+jsBridge.oAuthSignIn({needSignIn: true/false}).then(res => {
   // 授权成功
 }).catch(err => {
   // 授权失败

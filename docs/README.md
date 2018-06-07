@@ -99,12 +99,12 @@
 		url: '',
 		jsApiList: [],
 		errorHandler(err){
-			alert(JSON.stringify(err))
+			alert(err)
 		}
 	}).then((bridge) => {
 		jsBridge = bridge
 	}).catch(err => {
-		alert(JSON.stringify(err))
+		alert(err)
 	})
 
   new Vue({
@@ -250,7 +250,7 @@ jsBridge.getUserInfo().then(res => {
 #### 授权登录
 
 ```js
-jsBridge.oAuthSignIn({needSignIn = false} = {}).then(res => {
+jsBridge.oAuthSignIn({needSignIn: true/false}).then(res => {
   // 授权成功
 }).catch(err => {
   // 授权失败
@@ -318,7 +318,7 @@ token=xxx
 步骤1. 对所有待签名参数按照字段名的ASCII 码从小到大排序（字典序）后，使用URL键值对的格式（即key1=value1&key2=value2…）拼接成字符串string1：
 
 ``` js
-appid=xxx&noncestr=xxx&timestamp=1414587457&url=https://www.baidu.com?params=value&token=xxx
+appid=xxx&noncestr=xxx&timestamp=1414587457&token=xxx&url=https://www.baidu.com?params=value
 ```
 
 步骤2. 对string1进行sha1签名，得到signature：
