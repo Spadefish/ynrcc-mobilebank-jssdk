@@ -24,7 +24,6 @@ const obj = {
   token: '167adb84463926289d1d6a2a960be8de',
   url: ''
 }
-
 // TODO 修改为npm引入
 const signature = SHA.SHA1(SHA.orgSHA1SignSrc(SHA.objToArrayAndSortByASCII(obj), obj))
 console.log(`签名：${signature}`)

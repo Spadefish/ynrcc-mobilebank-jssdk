@@ -18,10 +18,10 @@
     <ul>
       <li><a @click="oAuthSignIn(false)">监听手机银行用户登录状态-拉起登录(否needSignIn=false)</a></li>
     </ul>
-    <!--<h4>分享</h4>-->
-   <!-- <ul>
+    <h4>分享</h4>
+    <ul>
       <li><a @click="shareToWeChat">微信分享</a></li>
-    </ul>-->
+    </ul>
   </div>
 </template>
 
